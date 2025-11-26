@@ -1,0 +1,5 @@
+{
+  "name": "AI Resume Architect",
+  "description": "A smart resume builder that parses existing resumes using Gemini AI and offers multiple professional templates for editing and export.",
+  "requestFramePermissions": []
+}
