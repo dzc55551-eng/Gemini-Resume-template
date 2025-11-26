@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AI Resume Architect</title>
+    <script>
+      // Polyfill for process.env to prevent runtime crash in browser
+      window.process = window.process || { env: { API_KEY: '' } };
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -105,6 +109,7 @@
 </head>
   <body>
     <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
     <script src="https://o.alicdn.com/appflow/chatbot/v1/AppflowChatSDK.js"></script>
     <script>
         window.APPFLOW_CHAT_SDK.init({
