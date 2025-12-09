@@ -66,52 +66,52 @@ export type Language = 'en' | 'zh';
 
 export const INITIAL_RESUME_STATE: ResumeData = {
   personalInfo: {
-    fullName: "Alex Doe",
-    email: "alex.doe@example.com",
-    phone: "(555) 123-4567",
-    location: "San Francisco, CA",
-    linkedin: "linkedin.com/in/alexdoe",
-    website: "alexdoe.dev",
+    fullName: "张三",
+    email: "zhang.san@example.com",
+    phone: "138 0013 8000",
+    location: "北京, 中国",
+    linkedin: "linkedin.com/in/zhangsan",
+    website: "zhangsan.dev",
     avatar: "",
     age: "28",
-    gender: "Male"
+    gender: "男"
   },
-  summary: "Results-oriented software engineer with 5+ years of experience in full-stack development. Proven track record of delivering scalable web applications and optimizing backend performance.",
+  summary: "结果导向型软件工程师，拥有 5 年以上全栈开发经验。在交付可扩展的 Web 应用程序和优化后端性能方面拥有良好的记录。",
   experience: [
     {
       id: '1',
-      title: "Senior Software Engineer",
-      company: "Tech Solutions Inc.",
+      title: "高级软件工程师",
+      company: "科技解决方案有限公司",
       startDate: "2021-03",
-      endDate: "Present",
-      description: "• Led a team of 5 developers in rebuilding the core checkout payment microservice.\n• Reduced API latency by 40% through caching strategies and database indexing.\n• Mentored junior developers and conducted code reviews."
+      endDate: "至今",
+      description: "• 带领 5 人开发团队重构核心支付微服务。\n• 通过缓存策略和数据库索引将 API 延迟降低了 40%。\n• 指导初级开发人员并进行代码审查。"
     },
     {
       id: '2',
-      title: "Software Developer",
-      company: "Creative Startups LLC",
+      title: "软件开发工程师",
+      company: "创新创业 LLC",
       startDate: "2018-06",
       endDate: "2021-02",
-      description: "• Developed responsive UI components using React and Tailwind CSS.\n• Integrated third-party APIs for map services and email notifications.\n• Collaborated with designers to ensure pixel-perfect implementation."
+      description: "• 使用 React 和 Tailwind CSS 开发响应式 UI 组件。\n• 集成第三方 API 用于地图服务和电子邮件通知。\n• 与设计师合作确保像素级完美实现。"
     }
   ],
   projects: [
     {
       id: '1',
-      name: "E-commerce Analytics Dashboard",
-      role: "Frontend Lead",
+      name: "电商分析仪表盘",
+      role: "前端负责人",
       startDate: "2020-01",
       endDate: "2020-06",
-      description: "• Built a real-time analytics dashboard using React, D3.js, and WebSocket.\n• Optimized data visualization performance for large datasets.",
-      link: "github.com/alexdoe/analytics"
+      description: "• 使用 React、D3.js 和 WebSocket 构建实时分析仪表盘。\n• 优化大数据集的数据可视化性能。",
+      link: "github.com/zhangsan/analytics"
     }
   ],
   education: [
     {
       id: '1',
-      degree: "B.S.",
-      major: "Computer Science",
-      school: "University of Technology",
+      degree: "本科",
+      major: "计算机科学",
+      school: "科技大学",
       year: "2018 - 2022",
       startDate: "2018-09",
       endDate: "2022-06"

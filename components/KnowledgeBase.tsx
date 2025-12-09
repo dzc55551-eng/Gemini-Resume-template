@@ -27,7 +27,7 @@ const KNOWLEDGE_DATA = {
       articles: [
         {
           title: 'The STAR Method',
-          content: 'Use the STAR method to describe your experiences:\n\n• **Situation**: Set the scene.\n• **Task**: Describe your responsibility.\n• **Action**: Explain what steps you took.\n• **Result**: Share outcomes (use numbers!).'
+          content: 'Use the STAR method to describe your experiences:\n\n• Situation: Set the scene.\n• Task: Describe your responsibility.\n• Action: Explain what steps you took.\n• Result: Share outcomes (use numbers!).'
         },
         {
           title: 'Action Verbs',
@@ -61,7 +61,7 @@ const KNOWLEDGE_DATA = {
       articles: [
         {
           title: 'STAR 法则',
-          content: '使用 STAR 法则描述你的经历，让成就更具说服力：\n\n• **情境 (Situation)**: 任务背景是什么？\n• **任务 (Task)**: 你面临的挑战或目标？\n• **行动 (Action)**: 你具体做了什么？\n• **结果 (Result)**: 取得了什么可量化的成果？'
+          content: '使用 STAR 法则描述你的经历，让成就更具说服力：\n\n• 情境 (Situation): 任务背景是什么？\n• 任务 (Task): 你面临的挑战或目标？\n• 行动 (Action): 你具体做了什么？\n• 结果 (Result): 取得了什么可量化的成果？'
         },
         {
           title: '拒绝“流水账”',
@@ -110,8 +110,10 @@ const KNOWLEDGE_DATA = {
 
 const KnowledgeBase: React.FC<KnowledgeBaseProps> = ({ isOpen, onClose, language }) => {
   const data: Category[] = KNOWLEDGE_DATA[language] || KNOWLEDGE_DATA['en'];
-  const [openCategory, setOpenCategory] = useState<string | null>('resume');
-  const [isImaOpen, setIsImaOpen] = useState<boolean>(false);
+  // Default openCategory set to null (closed) instead of 'resume'
+  const [openCategory, setOpenCategory] = useState<string | null>(null);
+  // Default isImaOpen set to true
+  const [isImaOpen, setIsImaOpen] = useState<boolean>(true);
 
   const toggleCategory = (id: string) => {
     setOpenCategory(openCategory === id ? null : id);
