@@ -64,6 +64,7 @@ const FORM_LABELS = {
       school: "School",
       degree: "Degree",
       major: "Major",
+      courses: "Main Courses",
       year: "Year",
       startDate: "Start Date",
       endDate: "Graduation Date",
@@ -131,6 +132,7 @@ const FORM_LABELS = {
       school: "学校名称",
       degree: "学历 (如: 本科)",
       major: "专业 (如: 计算机)",
+      courses: "主修课程",
       year: "毕业年份",
       startDate: "入学时间",
       endDate: "毕业时间",
@@ -182,7 +184,7 @@ const ResumeForm: React.FC<ResumeFormProps> = ({ data, onChange, language }) => 
     } else if (section === 'projects') {
       newItem = { id, name: '', role: '', startDate: '', endDate: '', description: '', link: '' };
     } else if (section === 'education') {
-      newItem = { id, school: '', degree: '', major: '', year: '', startDate: '', endDate: '' };
+      newItem = { id, school: '', degree: '', major: '', courses: '', year: '', startDate: '', endDate: '' };
     } else {
       newItem = { id, name: '', level: 80 };
     }
@@ -606,6 +608,16 @@ const ResumeForm: React.FC<ResumeFormProps> = ({ data, onChange, language }) => 
                                         onChange={(e) => updateItem('education', edu.id, 'major', e.target.value)}
                                     />
                                 </div>
+                            </div>
+                            
+                            <div>
+                                <label className="block text-xs font-bold text-gray-500 mb-1">{labels.education.courses}</label>
+                                <textarea 
+                                    className="w-full p-2 border border-gray-300 rounded text-sm h-16 resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                                    value={edu.courses || ''}
+                                    onChange={(e) => updateItem('education', edu.id, 'courses', e.target.value)}
+                                    placeholder={language === 'zh' ? '例：微观经济学、会计学原理...' : 'e.g. Microeconomics, Accounting...'}
+                                />
                             </div>
 
                             <DateRangeInputs 

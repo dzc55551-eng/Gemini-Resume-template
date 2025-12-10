@@ -26,6 +26,7 @@ export interface Education {
   year: string; // Legacy/Fallback string (e.g. "2018 - 2022")
   startDate?: string; // New: YYYY-MM
   endDate?: string;   // New: YYYY-MM or "Present"
+  courses?: string;   // New: Main courses
 }
 
 export interface PersonalInfo {
@@ -37,7 +38,7 @@ export interface PersonalInfo {
   website: string;
   avatar?: string; // Base64 image string
   age?: string;
-  gender?: string; // New field
+  gender?: string;
 }
 
 export interface SkillItem {
@@ -60,6 +61,7 @@ export enum TemplateType {
   CLASSIC = 'CLASSIC',
   MINIMAL = 'MINIMAL',
   SIDEBAR = 'SIDEBAR',
+  FRESH_GRAD = 'FRESH_GRAD',
 }
 
 export type Language = 'en' | 'zh';
@@ -114,7 +116,8 @@ export const INITIAL_RESUME_STATE: ResumeData = {
       school: "科技大学",
       year: "2018 - 2022",
       startDate: "2018-09",
-      endDate: "2022-06"
+      endDate: "2022-06",
+      courses: "数据结构、算法分析、操作系统、计算机网络、数据库原理、编译原理"
     }
   ],
   skills: [

@@ -50,13 +50,15 @@ const TEMPLATE_NAMES = {
     [TemplateType.MODERN]: "Modern",
     [TemplateType.CLASSIC]: "Classic",
     [TemplateType.MINIMAL]: "Minimal",
-    [TemplateType.SIDEBAR]: "Sidebar"
+    [TemplateType.SIDEBAR]: "Sidebar",
+    [TemplateType.FRESH_GRAD]: "Fresh Grad"
   },
   zh: {
     [TemplateType.MODERN]: "现代",
     [TemplateType.CLASSIC]: "经典",
     [TemplateType.MINIMAL]: "极简",
-    [TemplateType.SIDEBAR]: "侧边栏"
+    [TemplateType.SIDEBAR]: "侧边栏",
+    [TemplateType.FRESH_GRAD]: "应届生"
   }
 };
 
@@ -341,7 +343,7 @@ const App: React.FC = () => {
             <div className="p-4 border-b border-gray-200 bg-gray-50">
                <label className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 block">{t.selectTemplate}</label>
                <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
-                 {[TemplateType.MODERN, TemplateType.CLASSIC, TemplateType.MINIMAL, TemplateType.SIDEBAR].map((templateType) => (
+                 {[TemplateType.MODERN, TemplateType.CLASSIC, TemplateType.MINIMAL, TemplateType.SIDEBAR, TemplateType.FRESH_GRAD].map((templateType) => (
                     <button 
                         key={templateType} 
                         onClick={() => setActiveTemplate(templateType)}

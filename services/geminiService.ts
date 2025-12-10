@@ -74,6 +74,7 @@ const parseResumeWithGemini = async (base64Data: string, mimeType: string, langu
               year: { type: Type.STRING },
               startDate: { type: Type.STRING, description: "YYYY-MM format" },
               endDate: { type: Type.STRING, description: "YYYY-MM format" },
+              courses: { type: Type.STRING, description: "List of main courses or relevant coursework" },
             },
           },
         },
@@ -86,8 +87,8 @@ const parseResumeWithGemini = async (base64Data: string, mimeType: string, langu
     };
 
     const promptText = language === 'zh' 
-      ? "请从附件中提取简历信息，并按照指定的 JSON 结构输出。请注意：1. 将教育经历中的'学历'和'专业'分开提取。2. 所有时间字段请尽量标准化为 'YYYY-MM' 格式（如 2023-01），如果是'至今'请填 'Present'。3. 尽量提取教育经历的开始和结束时间。4. 如果简历中有年龄和性别信息，请提取。如果某个字段缺失，请保留为空字符串。请将工作经历和项目经历的描述总结为简洁的要点。"
-      : "Extract the resume information from the attached document into the specified JSON structure. Notes: 1. Extract 'degree' and 'major' separately for education. 2. Standardize all dates to 'YYYY-MM' format where possible, use 'Present' for current roles. 3. Extract start and end dates for education. 4. Extract age and gender if available. If a field is missing, leave it as an empty string. Summarize experience and project descriptions into concise bullet points.";
+      ? "请从附件中提取简历信息，并按照指定的 JSON 结构输出。请注意：1. 将教育经历中的'学历'和'专业'分开提取，如果有'主修课程'也请提取。2. 所有时间字段请尽量标准化为 'YYYY-MM' 格式（如 2023-01），如果是'至今'请填 'Present'。3. 尽量提取教育经历的开始和结束时间。4. 如果简历中有年龄和性别信息，请提取。如果某个字段缺失，请保留为空字符串。请将工作经历和项目经历的描述总结为简洁的要点。"
+      : "Extract the resume information from the attached document into the specified JSON structure. Notes: 1. Extract 'degree', 'major', and 'courses' (if available) separately for education. 2. Standardize all dates to 'YYYY-MM' format where possible, use 'Present' for current roles. 3. Extract start and end dates for education. 4. Extract age and gender if available. If a field is missing, leave it as an empty string. Summarize experience and project descriptions into concise bullet points.";
 
     let contents;
 
@@ -169,7 +170,8 @@ const parseResumeWithGemini = async (base64Data: string, mimeType: string, langu
         degree: edu.degree || "",
         major: edu.major || "",
         startDate: edu.startDate || "",
-        endDate: edu.endDate || ""
+        endDate: edu.endDate || "",
+        courses: edu.courses || ""
       })),
       // Map simple strings to SkillItem objects with a default high proficiency
       skills: (parsed.skills || []).map((skill: string) => ({
@@ -249,6 +251,7 @@ const translateResume = async (data: ResumeData, targetLanguage: Language): Prom
                     year: { type: Type.STRING },
                     startDate: { type: Type.STRING },
                     endDate: { type: Type.STRING },
+                    courses: { type: Type.STRING },
                   },
                 },
               },
@@ -274,7 +277,7 @@ const translateResume = async (data: ResumeData, targetLanguage: Language): Prom
         const prompt = `Translate the following resume JSON data into ${targetLangName}. 
         Rules:
         1. Maintain the exact JSON structure.
-        2. Translate 'summary', 'description', 'title', 'role', 'degree', 'major', 'school', 'location', 'gender' and skill names.
+        2. Translate 'summary', 'description', 'title', 'role', 'degree', 'major', 'courses', 'school', 'location', 'gender' and skill names.
         3. Do NOT translate proper nouns (like names of people or specific tech stack names like React, Python) if they are usually kept in original language, but translate company names if appropriate or provide transliteration.
         4. Convert 'Present' to '至今' if translating to Chinese, and '至今' to 'Present' if translating to English.
         5. Return the result in the specified JSON schema.
@@ -316,7 +319,8 @@ const translateResume = async (data: ResumeData, targetLanguage: Language): Prom
             })),
             education: (parsed.education || []).map((edu: any, index: number) => ({
                 ...edu,
-                id: data.education[index]?.id || crypto.randomUUID()
+                id: data.education[index]?.id || crypto.randomUUID(),
+                courses: edu.courses || ""
             })),
             skills: (parsed.skills || []).map((skillName: string, index: number) => ({
                 id: data.skills[index]?.id || crypto.randomUUID(),

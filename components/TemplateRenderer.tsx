@@ -145,6 +145,12 @@ const ModernTemplate: React.FC<TemplateProps> = ({ data, language }) => {
                     {edu.degree}
                     {edu.major && ` · ${edu.major}`}
                   </div>
+                  {edu.courses && (
+                    <div className="text-sm text-gray-600 mt-1">
+                      <span className="font-medium">{language === 'zh' ? '主修课程：' : 'Courses: '}</span>
+                      {edu.courses}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -250,6 +256,12 @@ const ClassicTemplate: React.FC<TemplateProps> = ({ data, language }) => {
                   {edu.degree}
                   {edu.major && `, ${edu.major}`}
                 </div>
+                {edu.courses && (
+                  <div className="text-sm mt-1">
+                     <span className="font-bold">{language === 'zh' ? '主修课程：' : 'Courses: '}</span>
+                     {edu.courses}
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -314,6 +326,12 @@ const MinimalTemplate: React.FC<TemplateProps> = ({ data, language }) => {
                     {edu.major && <span className="text-slate-400 block text-xs mt-0.5">{edu.major}</span>}
                   </div>
                   <div className="text-xs text-slate-400 mt-1">{formatRange(edu.startDate, edu.endDate, edu.year)}</div>
+                  {edu.courses && (
+                    <div className="text-xs text-slate-500 mt-1">
+                       <span className="font-medium">{language === 'zh' ? '主修课程：' : 'Courses: '}</span>
+                       {edu.courses}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -502,6 +520,12 @@ const SidebarTemplate: React.FC<TemplateProps> = ({ data, language }) => {
                             {edu.degree} 
                             {edu.major && <span className="text-gray-600 font-normal"> | {edu.major}</span>}
                         </div>
+                        {edu.courses && (
+                          <div className="text-sm text-gray-600 mt-1">
+                              <span className="font-medium">{language === 'zh' ? '主修课程：' : 'Courses: '}</span>
+                              {edu.courses}
+                          </div>
+                        )}
                     </div>
                 ))}
             </div>
@@ -563,6 +587,261 @@ const SidebarTemplate: React.FC<TemplateProps> = ({ data, language }) => {
   );
 };
 
+const FreshGradTemplate: React.FC<TemplateProps> = ({ data, language }) => {
+  // Use specific headers for this template to match the PDF context
+  const headers = {
+    en: {
+        resume: "RESUME",
+        objective: "JOB OBJECTIVE:",
+        basicInfo: "Basic Information",
+        education: "Education Background",
+        campus: "Campus Experience",
+        internship: "Internship Experience",
+        skills: "Skills & Advantages",
+        selfEval: "Self Evaluation"
+    },
+    zh: {
+        resume: "个人简历",
+        objective: "求职意向：",
+        basicInfo: "基本信息",
+        education: "教育背景",
+        campus: "校园经历",
+        internship: "实习经历",
+        skills: "技能&优势",
+        selfEval: "自我评价"
+    }
+  };
+  const t = headers[language];
+
+  // Theme Colors
+  const SLATE_COLOR = '#4a6f7c'; // Teal/Slate from image
+  const GOLD_COLOR = '#c5a47e'; // Gold/Tan from image
+
+  // Ribbon Header Component
+  const RibbonHeader = ({ title }: { title: string }) => (
+    <div className="relative mb-5 mt-2">
+      <div 
+        className="relative z-10 inline-block text-white font-bold py-1.5 pl-4 pr-10 text-base shadow-sm"
+        style={{ 
+            backgroundColor: SLATE_COLOR,
+            clipPath: "polygon(0 0, calc(100% - 20px) 0, 100% 50%, calc(100% - 20px) 100%, 0 100%)" 
+        }}
+      >
+        {title}
+        {/* Double stripes visual from image */}
+        <div className="absolute right-0 top-0 bottom-0 w-8 h-full overflow-hidden pointer-events-none">
+             <div className="absolute top-0 bottom-0 right-2 w-0.5 bg-white/30 skew-x-[-20deg]"></div>
+             <div className="absolute top-0 bottom-0 right-3.5 w-0.5 bg-white/30 skew-x-[-20deg]"></div>
+        </div>
+      </div>
+      {/* 3D Fold Triangle */}
+      <div 
+         className="absolute left-0 -bottom-2 w-2 h-2"
+         style={{ 
+             backgroundColor: '#324b54', // Darker shade of slate
+             clipPath: "polygon(0 0, 100% 0, 100% 100%)" 
+         }}
+      ></div>
+      <div className="absolute top-1/2 left-0 w-full border-t border-slate-300 -z-0"></div>
+    </div>
+  );
+
+  return (
+    <div className="w-full h-full bg-white text-slate-800 font-sans flex flex-col p-8 pt-10">
+       
+        {/* Header Row */}
+        <div className="flex items-end justify-between mb-4">
+            <div className="flex items-end">
+                <h1 className="text-6xl font-normal tracking-wide leading-none" 
+                    style={{ color: SLATE_COLOR, fontFamily: '"Microsoft YaHei", sans-serif' }}>
+                {t.resume}
+                </h1>
+                <div className="h-10 w-px bg-gray-400 mx-6 mb-1"></div>
+                <div className="mb-1 text-lg font-bold text-gray-700">
+                    {t.objective}
+                    <span className="font-normal border-b border-gray-400 px-2 ml-1 text-gray-900">
+                        {data.experience[0]?.title || (language === 'zh' ? "应届毕业生" : "Fresh Graduate")}
+                    </span>
+                </div>
+            </div>
+            
+            {/* Icons */}
+            <div className="flex gap-6 mb-2 shrink-0">
+                <div className="shrink-0">
+                    <svg viewBox="0 0 24 24" className="w-10 h-10" style={{ color: SLATE_COLOR }} fill="currentColor">
+                        <path d="M12 3L1 9L12 15L21 10.09V17H23V9M5 13.18V17.18L12 21L19 17.18V13.18L12 17L5 13.18Z" />
+                    </svg>
+                </div>
+                <div className="shrink-0">
+                     <svg viewBox="0 0 24 24" className="w-9 h-9 mt-1" style={{ color: SLATE_COLOR }} fill="currentColor">
+                         <path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z" />
+                     </svg>
+                </div>
+                <div className="shrink-0">
+                    <svg viewBox="0 0 24 24" className="w-9 h-9 mt-1" style={{ color: SLATE_COLOR }} fill="currentColor">
+                        <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        {/* Decorative Bar */}
+        <div className="w-full h-4 relative mb-6">
+            {/* Gold bar background */}
+            <div className="absolute inset-0" style={{ backgroundColor: GOLD_COLOR }}></div>
+            {/* Slate bar overlay with slant */}
+            <div className="absolute top-0 bottom-0 left-0 w-[65%]" 
+                    style={{ 
+                        backgroundColor: SLATE_COLOR,
+                        clipPath: "polygon(0 0, 100% 0, calc(100% - 20px) 100%, 0 100%)" 
+                    }}>
+            </div>
+        </div>
+
+       <div className="flex-1 flex flex-col">
+           
+           {/* Basic Info */}
+           <section>
+               <RibbonHeader title={t.basicInfo} />
+               <div className="px-2 mb-4">
+                    <div className="flex justify-between items-start">
+                        <div className="flex-1 grid grid-cols-2 gap-x-8 gap-y-5 text-sm text-slate-700">
+                            <div className="flex gap-2 items-center">
+                                <span className="font-bold min-w-[4em] text-slate-900 text-justify-last">{language === 'zh' ? '姓 名：' : 'Name:'}</span>
+                                <span>{data.personalInfo.fullName}</span>
+                            </div>
+                            <div className="flex gap-2 items-center">
+                                <span className="font-bold min-w-[4em] text-slate-900 text-justify-last">{language === 'zh' ? '年 龄：' : 'Age:'}</span>
+                                <span>{data.personalInfo.age}</span> 
+                            </div>
+                            <div className="flex gap-2 items-center">
+                                <span className="font-bold min-w-[4em] text-slate-900 text-justify-last">{language === 'zh' ? '电 话：' : 'Tel:'}</span>
+                                <span>{data.personalInfo.phone}</span>
+                            </div>
+                             <div className="flex gap-2 items-center">
+                                <span className="font-bold min-w-[4em] text-slate-900 text-justify-last">{language === 'zh' ? '学 历：' : 'Degree:'}</span>
+                                <span>{data.education[0]?.degree}</span>
+                            </div>
+                             <div className="flex gap-2 items-center">
+                                <span className="font-bold min-w-[4em] text-slate-900 text-justify-last">{language === 'zh' ? '邮 箱：' : 'Email:'}</span>
+                                <span>{data.personalInfo.email}</span>
+                            </div>
+                            <div className="flex gap-2 items-center">
+                                 <span className="font-bold min-w-[4em] text-slate-900 text-justify-last">{language === 'zh' ? '性 别：' : 'Gender:'}</span>
+                                 <span>{data.personalInfo.gender}</span>
+                            </div>
+                        </div>
+                        {/* Photo */}
+                        {data.personalInfo.avatar && (
+                            <div className="w-[5.5rem] shrink-0 ml-6 aspect-[3/4]">
+                                <img src={data.personalInfo.avatar} alt="Profile" className="w-full h-full object-cover" />
+                            </div>
+                        )}
+                    </div>
+               </div>
+           </section>
+
+           {/* Education */}
+           <section>
+               <RibbonHeader title={t.education} />
+               <div className="space-y-4 px-2">
+                   {data.education.map((edu) => (
+                       <div key={edu.id}>
+                           <div className="flex justify-between font-bold text-slate-800 text-base mb-1">
+                               <span>{formatRange(edu.startDate, edu.endDate, edu.year)}</span>
+                               <span>{edu.school}</span>
+                               <span>{edu.degree} · {edu.major}</span>
+                           </div>
+                           {edu.courses && (
+                                <div className="text-sm text-slate-600 pl-4 border-l-2 border-slate-200 mt-1">
+                                    <span className="font-bold mr-2">{language === 'zh' ? '主修课程：' : 'Main Courses:'}</span>
+                                    <span className="opacity-90">{edu.courses}</span>
+                                </div>
+                           )}
+                       </div>
+                   ))}
+               </div>
+           </section>
+
+           {/* Campus Experience (mapped from Projects) */}
+           {data.projects && data.projects.length > 0 && (
+               <section>
+                   <RibbonHeader title={t.campus} />
+                   <div className="space-y-4 px-2">
+                       {data.projects.map((proj) => (
+                           <div key={proj.id} className="text-sm">
+                               <div className="flex justify-between items-center font-bold text-slate-800 mb-1">
+                                    <span className="w-32 shrink-0">{formatDate(proj.startDate)} - {formatDate(proj.endDate)}</span>
+                                    <span className="flex-1">{proj.name}</span>
+                                    <span className="text-right">{proj.role}</span>
+                               </div>
+                               <div className="pl-4 text-slate-600 leading-relaxed space-y-1">
+                                   {proj.description.split('\n').map((line, idx) => (
+                                       <div key={idx} className="flex gap-2">
+                                           <span className="text-slate-400">•</span>
+                                           <span className="flex-1">{line.replace(/^[•\-\*]\s*/, '')}</span>
+                                       </div>
+                                   ))}
+                               </div>
+                           </div>
+                       ))}
+                   </div>
+               </section>
+           )}
+
+           {/* Internship Experience (mapped from Experience) */}
+           <section>
+               <RibbonHeader title={t.internship} />
+               <div className="space-y-4 px-2">
+                   {data.experience.map((exp) => (
+                       <div key={exp.id} className="text-sm">
+                           <div className="flex justify-between items-center font-bold text-slate-800 mb-1">
+                                <span className="w-32 shrink-0">{formatDate(exp.startDate)} - {formatDate(exp.endDate)}</span>
+                                <span className="flex-1">{exp.company}</span>
+                                <span className="text-right">{exp.title}</span>
+                           </div>
+                           <div className="pl-4 text-slate-600 leading-relaxed space-y-1">
+                               {exp.description.split('\n').map((line, idx) => (
+                                   <div key={idx} className="flex gap-2">
+                                       <span className="text-slate-400">•</span>
+                                       <span className="flex-1">{line.replace(/^[•\-\*]\s*/, '')}</span>
+                                   </div>
+                               ))}
+                           </div>
+                       </div>
+                   ))}
+               </div>
+           </section>
+
+           {/* Skills */}
+           <section>
+                <RibbonHeader title={t.skills} />
+                <div className="px-2 text-sm text-slate-700 leading-relaxed">
+                    <div className="flex gap-2">
+                        <span className="text-slate-400">•</span>
+                        <span>{data.skills.map(s => s.name).join(' / ')}</span>
+                    </div>
+                </div>
+           </section>
+
+           {/* Self Eval (mapped from Summary) */}
+           {data.summary && (
+               <section>
+                   <RibbonHeader title={t.selfEval} />
+                   <div className="px-2 text-sm text-slate-700 leading-relaxed">
+                        <div className="flex gap-2">
+                            <span className="text-slate-400">•</span>
+                            <span className="whitespace-pre-line">{data.summary}</span>
+                        </div>
+                   </div>
+               </section>
+           )}
+
+       </div>
+    </div>
+  );
+};
+
 interface RendererProps extends TemplateProps {
   template: TemplateType;
 }
@@ -577,6 +856,8 @@ const TemplateRenderer: React.FC<RendererProps> = ({ template, data, language })
       return <MinimalTemplate data={data} language={language} />;
     case TemplateType.SIDEBAR:
       return <SidebarTemplate data={data} language={language} />;
+    case TemplateType.FRESH_GRAD:
+      return <FreshGradTemplate data={data} language={language} />;
     default:
       return <ModernTemplate data={data} language={language} />;
   }
